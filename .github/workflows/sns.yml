@@ -1,0 +1,36 @@
+name: Notification
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'feature**'
+  delete:
+    branches:
+      - 'feature**'
+
+env:
+  PIPELINE_USER_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  PIPELINE_USER_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: us-east-1
+  TOPIC_ARN: ${{ secrets.TOPIC_ARN }}
+
+jobs:
+  notification:
+    steps:
+      - name: AWS SNS - Publish Topic
+      # You may pin to the exact commit or the version.
+      # uses: nothingalike/sns-publish-topic@969b39c3261d06730c8ca679f82851ee93b9137d
+      uses: nothingalike/sns-publish-topic@v1.7
+      with:
+        # The message you want to send
+        MESSAGE: ${{ toJSON(github.event) }}
+        # The topic arn you are sending
+        TOPIC_ARN: ${{ env.TOPIC_ARN }}
+        # A AWSN SNS Region. Can alternatively be stored in environment
+        AWS_REGION: ${{ env.AWS_REGION }}
+        # A AWS SNS Key. Can alternatively be stored in environment
+        AWS_ACCESS_KEY_ID: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
+        # A AWS SNS Secret. Can alternatively be stored in environment
+        AWS_SECRET_ACCESS_KEY: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
+        
