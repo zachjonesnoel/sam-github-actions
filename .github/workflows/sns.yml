@@ -28,10 +28,4 @@ jobs:
           MESSAGE: "${{ github.event.head_commit.message }}"
           # The topic arn you are sending
           TOPIC_ARN: ${{ env.TOPIC_ARN }}
-          # A AWSN SNS Region. Can alternatively be stored in environment
-          AWS_REGION: ${{ env.AWS_REGION }}
-          # A AWS SNS Key. Can alternatively be stored in environment
-          AWS_ACCESS_KEY_ID: ${{ env.PIPELINE_USER_ACCESS_KEY_ID }}
-          # A AWS SNS Secret. Can alternatively be stored in environment
-          AWS_SECRET_ACCESS_KEY: ${{ env.PIPELINE_USER_SECRET_ACCESS_KEY }}
         
